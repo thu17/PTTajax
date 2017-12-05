@@ -1,0 +1,289 @@
+﻿@model QLPHSe.Models.DAILITHANHTOANModle
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div>
+    <h2>Phiếu thanh toán</h2>
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <td class="control-label col-md-4">Đại lí</td>                
+                <td class="control-label col-md-4">Nợ hiện tại</td>
+                <td class="control-label col-md-4">Ngày lập</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DropDownList("MADL", null, "----------Select----------", new { @class = "form-control col-md-4" })
+                </td>
+                <td>
+                    <select id="tienno" class=" form-control col-lg-4" disabled="disabled"></select>
+                </td>
+                <td>
+                    @Html.TextBox("NGAYTT", null, new { @class = "form-control col-lg-4" })
+                    <span class="error">Chọn ngày</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h2>
+        Chọn sách
+    </h2>
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <td class="control-label col-md-4">Sách còn nợ</td>
+                <td class="control-label col-md-2">Số lượng còn</td>
+                <td class="control-label col-md-2">Chọn số lượng</td>
+                <td class="control-label col-md-2">Đơn giá</td>
+                <td>&nbsp;</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <select id="sach" class="form-control col-md-4"></select>
+                    <span class="error">chọn sách</span>
+                </td>
+                <td>
+                    <select id="conlai" class=" form-control col-md-2" disabled="disabled"></select>
+                </td>
+                <td>
+                    <input type="text" id="soluong" class="form-control col-md-2" />
+                    <span class="error">yêu cầu số lượng</span>
+                </td>
+                <td>
+                    <select id="dongia" class="form-control col-md-2" disabled="disabled"></select>
+
+                </td>
+
+                <td>
+                    <input type="button" id="addsach" value="add" style="width:80px" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <h3>Chi tiết</h3>
+        <table class="table table-responsive">
+                <tr>
+                    <td class="control-label col-md-3">Tên sách</td>
+                    <td class="control-label col-md-1">Số lượng</td>
+                    <td class="control-label col-md-1">Đơn giá</td>
+                    <td class="control-label col-md-1">Thành tiền</td>
+                    <td class="control-label col-md-1">&nbsp;</td>
+                </tr>
+            <tbody id="listsach">
+
+            </tbody>
+        </table>
+    </div>
+    <div style="margin-right:80px;text-align:end">
+        <div>
+            
+            <input id="submit" type="submit" value="Lưu phiếu" class="btn btn-primary" style="width: 100px; float: right;margin-left:10px" />
+            <select id="TONGTIEN" class="form-control" style="float:right" disabled="disabled"></select>
+            <p style="float:right;line-height:30px">Tổng tiền&nbsp;</p>
+        </div>
+    </div>
+</div>
+    
+    
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="~/Scripts/myScripts.js"></script>
+<style>
+    span.error {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+    }
+
+    tr.error {
+        background-color: rgba(255,0,0,0.35);
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $('#NGAYTT').datepicker({
+            dateFormat: 'mm-dd-yy'
+        })
+    })
+</script>
+<script>
+    function xoakhiclick(masach) {
+        var input = {
+            id: masach
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/pttdaili/xoasach',
+            data: JSON.stringify(input),
+            contentType: 'application/json;charset=utf-8',
+            error:function(err){
+                alert('Error: '+err.statusText);
+            },
+            success: function (result) {
+                $('#listsach').html('');
+                var row = "";
+                var tt = 0;
+                $.each(result, function (i, value) {
+                    row = "<tr>" +
+                        "<td class='control-label col-md-3'>" + value.TENSACH + "</td>" +
+                        "<td class='control-label col-md-1'>" + value.SOLUONG + "</td>" +
+                        "<td class='control-label col-md-1'>" + value.GIABAN + "</td>" +
+                        "<td class='control-label col-md-1'>" + value.THANHTIEN + "</td>" +
+                        "<td class='control-label col-md-1'><button onclick='xoakhiclick(" + value.MASACH + ")' class='btn btn-primary'>Xóa</button></td>" + "</tr> ";
+                    tt = tt + value.THANHTIEN;
+                    $('#listsach').append(row);
+                });
+                $('#TONGTIEN').html('<option>' + tt + '</option>');
+            }
+        });
+    };
+</script>
+<script>
+    $(document).ready(function ()
+    {
+
+        $('#MADL').change(function ()
+        {
+            var id = $(this).val();
+            $('#no').empty();
+            $('#sach').empty();
+            $.get('/pttdaili/thongtindaili', { madl: id }, function (result){var tienno = "<option>" + result + "</option>";$('#tienno').html(tienno);},'text');
+            $.get('/pttdaili/sachmuaboidaili', { madl: id }, function (data)
+            {
+                var tensach = "<option>----------Select----------</option>";
+                $.each(data, function (i, result) {
+                    tensach += "<option value=" + result.Value + ">" + result.Text + "</option>";
+                });
+                     $('#sach').html(tensach);
+            });
+
+        });
+        function tailaithongtin() {
+            var s = $('#sach').val();
+            var dl = $('#MADL').val();
+            $('#conlai').html('');
+            $('#dongia').html('');
+            $.get('/pttdaili/thongtinsach', { madl: dl, masach: s }, function (data) {
+                var conlai = "<option value=" + data.SOLUONG + ">" + data.SOLUONG + "</option>";
+                var dongia = "<option value=" + data.GIABAN + ">" + data.GIABAN + "</option>";
+                $('#conlai').html(conlai);
+                $('#dongia').html(dongia);
+            });
+        }
+        $('#sach').change(function () {
+            tailaithongtin();
+        });
+
+        $('#addsach').click(function (ev)
+        {
+            $('#soluong').siblings('span.error').css('visibility', 'hidden');
+            $('#sach').siblings('span.error').css('visibility', 'hidden');
+            ev.preventDefault();
+            if ($('#sach').html() == '' || $('#sach :selected').html()== '----------Select----------')
+            {
+                $('#sach').siblings('span.error').css('visibility', 'visible');
+            }
+            else if ($.trim($('#soluong').val()) == '')
+            {
+                $('#soluong').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+
+                var requestData =
+                {
+                    MASACH: $('#sach').val(),
+                    SOLUONG: $.trim($('#soluong').val()),
+                    max: $('#conlai').val()
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: '/pttdaili/themsach',
+                    data: JSON.stringify(requestData),
+                    contentType: 'application/json;charset=utf-8',
+                    error: function (err) {
+                        alert('Error: ' + err.statusText);
+                    },
+                    success: function (result) {
+                        if (result == -1)
+                            alert("Kiểm tra lại số lượng!");
+                        else if (result == -2) {
+                            alert("Không thể thêm số lượng lớn hơn số lượng còn!")
+                        }
+                        else {
+                            $('#listsach').html('');
+                            var row = "";
+                            var tt = 0;
+                            $.each(result, function (i, value) {
+                                row = "<tr>" +
+                                    "<td class='control-label col-md-3'>" + value.TENSACH + "</td>" +
+                                    "<td class='control-label col-md-1'>" + value.SOLUONG + "</td>" +
+                                    "<td class='control-label col-md-1'>" + value.GIABAN + "</td>" +
+                                    "<td class='control-label col-md-1'>" + value.THANHTIEN + "</td>" +
+                                    "<td class='control-label col-md-1'><button onclick='xoakhiclick(" + value.MASACH + ")' class='btn btn-primary'>Xóa</button></td>" + "</tr> ";
+                                tt = tt + value.THANHTIEN;
+                                $('#listsach').append(row);
+                            });
+                            $('#TONGTIEN').html('<option>' + tt + '</option>');
+                        }
+
+                    },
+                    async: true,
+                    processData: false
+                });
+            }
+        });
+
+        $('#submit').click(function (ev) {
+            $('#NGAYTT').siblings('span.error').css('visibility', 'hidden');
+            ev.preventDefault();
+            if ($('#NGAYTT :selected').html() == '----------Select----------') {
+                $('#NGAYTT').siblings('span.error').css('visibility', 'visible');
+            }
+            else
+            if ($('#NGAYTT').val() == '')
+            {
+                $('#NGAYTT').siblings('span.error').css('visibility', 'visible');
+            } else {
+                var requestData =
+                {
+                    MADL: $('#MADL').val(),
+                    NGAYTT: $('#NGAYTT').val(),
+                    TONGTIEN: $.trim($('#TONGTIEN :selected').html())
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: '/pttdaili/luuphieu',
+                    data: JSON.stringify(requestData),
+                    contentType: 'application/json;charset=utf-8',
+                    error: function (err) {
+                        alert('Error: ' + err.statusText);
+                    },
+                    success: function (result) {
+                        location.reload();
+                    },
+                    async: true,
+                    processData: false
+                });
+            }
+        });
+
+    });
+</script>
+
+
+
+
+
+
+

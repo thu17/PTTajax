@@ -1,0 +1,66 @@
+﻿@model QLPHSe.Models.NXB
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>NXB</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TENNXB, new  { @class = "control-label col-md-2" } )
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TENNXB, new { htmlAttributes=new {@type ="text", @class = "form-contorl" }})
+                @Html.ValidationMessageFor(model => model.TENNXB)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DIACHI, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DIACHI, new {@type = "textbox", @class="form-contorl"})
+                @Html.ValidationMessageFor(model => model.DIACHI)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SDT, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SDT, new { @type = "textbox", @class = "form-contorl" })
+                @Html.ValidationMessageFor(model => model.SDT)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.STK, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.STK, new{@type="textbox" ,@class = "form-contorl" })
+                @Html.ValidationMessageFor(model => model.STK)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

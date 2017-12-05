@@ -1,0 +1,51 @@
+﻿@model List<Double>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h2>Doanh thu</h2>
+@Html.TextBox("ngaybd")
+@Html.TextBox("ngaykt")<input type="submit" id="btnthongke" value="Thống kê" />
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tổng thu</th>
+            <th>Tổng chi</th>
+            <th>Doanh thu</th>
+        </tr>
+    </thead>
+    <tbody id="datathongke">
+        
+
+    </tbody>
+</table>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#btnthongke").click(function () {
+            var datebd = $("#ngaybd").val();
+            var datekt = $("#ngaykt").val();
+            var setdata = $("#datathongke");
+            //setdata.html("");
+            $.ajax({
+                type: "POST",
+                url: "/doanhthu/thongke?bd=" + datebd +"&kt="+ datekt,
+                contentType: "html",
+                success: function (result) {
+                    setdata.append("<tr>");
+                    $.each(result, function (index, value) {
+                        var Data = "<td>" + value + "</td>";
+                            setdata.append(Data);
+                        });
+                    setd.append("</tr>");
+                   
+                }
+            });
+        });
+    });
+</script>
+

@@ -1,0 +1,62 @@
+﻿@model List<QLPHSe.Models.SachTonkhoModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h2>Thống kê tồn kho</h2>
+
+@Html.TextBox("ngaythongke")<input type="submit" id="btnthongke" value="Thống kê"/>
+<table class="table table-bordered"  >
+    <thead>
+        <tr>
+            <th>Mã sách</th>
+            <th>Tên sách</th>
+            <th>Số lượng tồn</th>
+        </tr>
+    </thead>
+    <tbody id="datathongke">
+        @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MASACH</td>
+                    <td>@item.TENSACH</td>
+                    <td>@item.SOLUONG</td>
+                </tr>
+            }
+
+    </tbody>
+</table>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#btnthongke").click(function () {
+            var date = $("#ngaythongke").val();
+            var setdata = $("#datathongke");
+            setdata.html("");
+            $.ajax({
+                type: "POST",
+                url: "/tonkho/thongke?date=" + date,
+                contentType: "html",
+                success: function (result) {
+                    if (result.length == 0) {
+                        setdata.append('<tr style="color:red"><td colspan=3>No record found</td></tr>')
+                    }
+                    else {
+                        $.each(result, function (index, value) {
+                            var Data = "<tr>" + "<td>" + value.MASACH + "</td>" +
+                                                "<td>" + value.TENSACH + "</td>" +
+                                                "<td>" + value.SOLUONG + "</td>" + "</tr>";
+                            setdata.append(Data);
+                        });
+
+                    }
+                }
+            });
+        });
+     });
+</script>

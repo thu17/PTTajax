@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="03d63e14e08a4f1cb4ced6af4c7096a9" Name="Diagram1">
+        <EntityTypeShape EntityType="QuanLiPhatHanhSachv5Model.CTPN" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiPhatHanhSachv5Model.CTPTTDAILI" Width="1.5" PointX="8.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiPhatHanhSachv5Model.CTPTTNXB" Width="1.5" PointX="5.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiPhatHanhSachv5Model.CTPX" Width="1.5" PointX="8.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiPhatHanhSachv5Model.DAILY" Width="1.5" PointX="3.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiPhatHanhSachv5Model.HANGSO" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiPhatHanhSachv5Model.NXB" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiPhatHanhSachv5Model.PHIEUNHAP" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiPhatHanhSachv5Model.PHIEUXUAT" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiPhatHanhSachv5Model.PTTDAILI" Width="1.5" PointX="6" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiPhatHanhSachv5Model.PTTNXB" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiPhatHanhSachv5Model.SACH" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLiPhatHanhSachv5Model.TONKHO" Width="1.5" PointX="5.25" PointY="17.25" IsExpanded="true" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__CTPN__MAPN__22AA2996" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__CTPN__MASACH__239E4DCF" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__CTPTTDAIL__MASAC__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__CTPTTDAIL__MPTTD__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__CTPTTNXB__MASACH__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__CTPTTNXB__MPTTNX__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__CTPX__MAPX__15502E78" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__CTPX__MASACH__164452B1" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__PHIEUXUAT__MADL__108B795B" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__PTTDAILI__MADL__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__PHIEUNHAP__MANXB__1CF15040" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__PTTNXB__MANXB__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__SACH__MANXB__09DE7BCC" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLiPhatHanhSachv5Model.FK__TONKHO__MASACH__440B1D61" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
